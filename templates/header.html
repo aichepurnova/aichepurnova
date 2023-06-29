@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>Antares Portal</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Alina Chepurnova, Antares">
+    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+
+    <link rel='stylesheet' href="{{url_for('static', filename='bootstrap.min.css')}}" type='text/css'/>
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='favicon.ico')}}">
+	
+	<style type="text/css">
+		html,
+		body {
+		  height:100%
+		}
+	</style>
+</head>
+
+<body class="body" style="background-color:hsl(0, 0%, 96%)">
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img width="200" src="{{url_for('static', filename='logo.png')}}"/>
+            </a>
+            <ul class="nav nav-pills">
+                <li><a href="/" class="nav-link px-2 link-dark">Home</a></li>
+                <li><a href="/about" class="nav-link px-2 link-dark">Resume</a></li>
+                <li><a href="/game" class="nav-link px-2 link-dark">Random Game</a></li>
+                <li><a href="/chars" class="nav-link px-2 link-dark">Chars</a></li>
+            </ul>
+        </header>
+    </div>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+	<footer class="footer mt-auto py-3">
+		<div class="container">
+			<p class="text-muted">aichepurnova@gmail.com or <a href="https://t.me/aichepurnova" target="blank">telegram</a>                              
+		</div>
+	</footer>	
+	
+</body>
+
+</html>

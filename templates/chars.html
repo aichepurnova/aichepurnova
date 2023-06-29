@@ -1,0 +1,23 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="h1" >
+        <p>Character Library</p>
+    </div>
+    <div class="row align-items-center">
+        {% for char in object_list %}
+        <div class="col-sm py-3">
+            <img class="rounded-circle" width="200" src="{{char.image}}"/>
+            <p class="h5">{{char.name}}</p>
+            <p>{{char.race}}, {{char.klass}} {{char.level}} </p>
+            <a href="/chars/{{char.id}}">
+                <button type="button" class="btn btn-outline-dark">Play</button>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

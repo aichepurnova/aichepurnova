@@ -1,0 +1,17 @@
+{% extends "header.html" %}
+
+{% block content %}
+<script src="{{url_for('static', filename='rb.js')}}" defer> </script>
+
+<form>
+  <div class="form-group">
+    <input class="form-control" type="text" placeholder="Name" class="">
+    <input class="form-control" type="text" placeholder="Position">
+    <input class="form-control" type="text" placeholder="Education">
+    <textarea class="form-control" placeholder="Skills (comma separated)"></textarea>
+    <textarea class="form-control" placeholder="About You"></textarea>
+    <button type="button" id="rb-submit" class="btn btn-outline-dark">Submit</button>
+  </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+
+<div class="bd-example">
+    <p class="display-4">Random game</p>
+    <p class="lead">
+        We often play Interview with friends.
+        The essence of this game is approximately the same,
+        but since we constantly say that “we know everything about everyone”,
+        I suggested making a kind of reverse game.
+    </p>
+    <p class="h3">Rules</p>
+    <ul>
+        <li>Take 2 sets of cards according to the number of players.
+            It could also be a number generator, or a bunch of paper names folded into a hat.</li>
+        <li>Write a lot of different personal questions, like “favorite movie” or “who is your crash”.
+            Mix these questions and put them in another hat</li>
+        <li>In turns, take out the name of the person for whom
+            someone will be answering the question and the question that needs to be answered.
+            (If you made two sets of names, then also get a piece of paper with the name
+            of the person who answers).</li>
+        <li>For example, it's my turn to answer (or my name was pulled out of the "who answers" bag).
+            I pull out your name and the question "favorite artist".
+            Then I try to answer that question for you (naming your favorite artist).
+            Rules for answers - fast, but not necessarily short. </li>
+    </ul>
+</div>
+
+{% load static %}
+<script src="{% static '/reverseapp/js/game.js' %}" defer> </script>
+<script src = 
+"https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" >
+</script>
+
+<div class="row align-items-center">
+    <div class="col-sm">
+        <p class="lead">Input names of the players:</p>
+        <div class="row align-items-center my-1">
+                <div class="col-sm">
+                    <input type="text" id="playersField" class="playersField form-control form-control-lg"
+                           placeholder="Player 1, Player 2, Player 3" aria-label=".form-control-lg">
+                </div>
+            </div>
+        <div class="row align-items-center my-1">
+            <div class="col-sm">
+                <button type="button" class="gameSubmit btn btn-outline-dark">Next</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="row align-items-center">
+            <div class="col-sm my-1">
+                <p class="lead">Results:</p>
+                Who answers: <p class="firstPlayer"></p>
+                Instead of: <p class="secondPlayer"></p>
+                Question: <p class="randomQstn"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
