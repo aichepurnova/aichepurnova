@@ -1,15 +1,70 @@
 {% extends "header.html" %}
 
 {% block content %}
-<script src="{{url_for('static', filename='rb.js')}}" defer> </script>
+<script type="text/javascript" src="js/intlTelInput-jquery.min.js"></script>
+<script type="text/javascript" src="js/rb.js"> </script>
 
-<form>
+<form id="rb-form">
   <div class="form-group">
-    <input class="form-control" type="text" placeholder="Name" class="">
-    <input class="form-control" type="text" placeholder="Position">
-    <input class="form-control" type="text" placeholder="Education">
-    <textarea class="form-control" placeholder="Skills (comma separated)"></textarea>
-    <textarea class="form-control" placeholder="About You"></textarea>
+    <div class="row">
+      <div class="col-sm-8">
+        <input class="form-control" type="text" id="name" name="name" placeholder="Name" value="{{ data.name }}">
+        <br>
+        <input class="form-control" type="text" placeholder="Position" id="position" name="position" value="{{ data.position }}">
+        <br>
+        <textarea class="form-control" placeholder="About you (Elevator Speach)" id="about" name="about">{{ data.about }}</textarea>
+      </div>
+      <div class="col-sm-4">
+        <div class="d-flex justify-content-center mb-4">
+            <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
+            class="rounded-circle" alt="example placeholder" style="width: 200px;">
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="btn btn-primary btn-rounded">
+                <label class="form-label text-white m-1" for="image">Choose file</label>
+                <input type="file" class="form-control d-none" id="image" name="image">
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8"  id="exp">
+        <p class="h3" style="font-weight: bold">Experience</p>
+        <div class="row" id="div1">
+          <div class="col-sm-4">
+            <input class="form-control" placeholder="Place" id="place" name="place" value="{{ data.place }}">
+            <br>
+            <input class="form-control" placeholder="From" id="from" name="from" value="{{ data.from }}">
+            <br>
+            <input class="form-control" placeholder="To" id="to" name="to" value="{{ data.to }}">
+          </div>
+          <div class="col-sm-8">
+            <input class="form-control" placeholder="Position" id="position" name="position" value="{{ data.position }}">
+            <br>
+            <textarea class="form-control" placeholder="Description" id="desc" name="desc" value="{{ data.desc }}"></textarea>
+          </div>
+        </div>
+        <br>
+        <button type="button" id="rb-add" class="btn btn-outline-dark">Add more</button>
+      </div>
+      <div class="col-sm-4">
+        <p class="h3" style="font-weight: bold">Skills</p>
+        <textarea class="form-control" placeholder="Skills (comma separated)" id="skills" name="skills">{{ data.skills }}</textarea>
+        <br>
+        <p class="h3" style="font-weight: bold">Education</p>
+        <input class="form-control" type="text" placeholder="Education" id="education" name="education" value="{{ data.education }}">
+        <br>
+        <p class="h3" style="font-weight: bold">Hobbies</p>
+        <input class="form-control" type="text" placeholder="Hobbies" id="hobby" name="hobby" value="{{ data.hobby }}">
+        <br>
+        <p class="h3" style="font-weight: bold">Contacts</p>
+        <input class="form-control" type="email" id="email" placeholder="Email" name="email" value="{{ data.email }}">
+        <br>
+        <input class="form-control" type="tel" id="phone" placeholder="Phone" name="phone" value="{{ data.phone }}">
+        <br>
+        <input class="form-control" type="text" id="contacts" placeholder="Other" name="other" value="{{ data.contacts }}">
+      </div>
+    </div>
     <button type="button" id="rb-submit" class="btn btn-outline-dark">Submit</button>
   </div>
 </form>

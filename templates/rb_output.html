@@ -1,0 +1,119 @@
+{% extends "header.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div>
+                <p class="h1" style="font-weight: bold">{{ data.name }}</p>
+                <p class="h4 text-muted" style="font-weight: bold">{{ data.position }}</p>
+            </div>
+            <div class="p-3">
+                <p> {{ data.about }}</p>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <img class="rounded-circle" width="300" src="{{url_for('static', filename='aichepurnova.png')}}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <p class="h3" style="font-weight: bold">Experience</p>
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="h5" style="font-weight: bold">Business Application Developer</p>
+                        at <img width="50" src="{{url_for('static', filename='avonlogo.png')}}"/>
+                        <p class="text-muted" style="font-weight: lighter">Aug 2022 - present</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <ul class="list-group">
+                            <li>Creating and implementing applications supporting the daily work of the Commercial Marketing
+                                and Commercial Operations team in areas of reporting, sales forecasting, task automation 
+                                and efficiency improvement</li>
+                            <li>Maintenance and development of internal web applications based on Python(Flask)/HTML5/CSS3/JavaScript</li>
+                            <li>Sharing knowledge and best practices related to new tools maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="h5" style="font-weight: bold">Digital Analyst</p>
+                        at <img width="50" src="{{url_for('static', filename='avonlogo.png')}}"/>
+                        <p class="text-muted" style="font-weight: lighter">Mar 2021 - Aug 2022</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <ul class="list-group">
+                            <li>Developing and supporting Digital reporting system</li>
+                            <li>Modifying existing reporting system</li>
+                            <li>Provide analytical support for the existing processes, initiatives and projects</li>
+                            <li>Providing data according to pre-defined parameters</li>
+                            <li>Supporting automated reporting distribution system</li>
+                            <li>Participation in past periods results evaluation, analyze actual results versus
+                                the forecast, provide comments on deviations of actual results in comparison to forecast.</li>
+                            <li>Participation in projects and initiatives with both local and global teams</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="h5" style="font-weight: bold">Customer Activation Specialist</p>
+                        at <img width="50" src="{{url_for('static', filename='avonlogo.png')}}"/>
+                        <p class="text-muted" style="font-weight: lighter">Jun 2019 - Mar 2021</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>Development and implementation of incentive programs:</p>
+                        <ul class="list-group">
+                            <li>Preparation and approval of business cases</li>
+                            <li>Working with the supply chain to plan the demands</li>
+                            <li>Preparation of communication materials</li>
+                            <li>Working with contractors and with supervisory functions (lawyers, finance, taxes, etc.)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="h5" style="font-weight: bold">Customer Activation Intern</p>
+                        <p class="text-muted" style="font-weight: lighter">Oct 2018 - Jun 2019</p>
+                    </div>
+                    <div class="col-sm-8">
+                        Being useful :)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3">
+                <p class="h3" style="font-weight: bold">Skills</p>
+                {% for skill in skills %}
+                    <span class="badge" style="background-color: #7ab0ee">{{ skill }}</span>
+                {% endfor %}
+            </div>
+            <div class="p-3">
+                <p class="h3" style="font-weight: bold">Education</p>
+                <span>{{ data.education }}</span>
+            </div>
+            <div class="p-3">
+                <p class="h3" style="font-weight: bold">Hobbies</p>
+                    <span>{{ data.hobby }}</span>
+            </div>
+            <div class="p-3">
+                <p class="h3" style="font-weight: bold">Contacts</p>
+                <ul class="p-3 list-group">
+                    <li>{{ data.email }}</li>
+                    <li>{{ data.phone }}</li>
+                    <li>{{ data.other }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

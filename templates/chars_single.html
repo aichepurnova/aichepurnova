@@ -1,8 +1,7 @@
-{% extends "personal/header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
-{% load static %}
-<script src="{% static 'chars/js/calculations.js' %}" defer> </script>
+<script type="text/javascript" src="js/calculations.js" defer> </script>
 <script src = 
 "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" >
 </script>
@@ -11,13 +10,14 @@
 <div class="container">
     <div class="row my-3">
         <div class="col-md-4">
-            <img class="img-fluid rounded-circle" width="300" src="{{object.image}}"/>
+            <img class="img-fluid rounded-circle" width="300"
+            src="{{url_for('send_file', filename='media/uploads/chars/'+details.image[0])}}"/>
         </div>
         <div class="col-md-8">
             <div class="row">
                 <div class="col-sm-8">
-                    <text class="h2">{{object.name}}, </text> 
-                    <text class="h5">{{object.race}}, {{object.klass}} {{object.level}}, {{object.backstory}} </text>
+                    <text class="h2">{{details.name[0]}}, </text>
+                    <text class="h5">{{details.race[0]}}, {{details.klass[0]}} {{details.level[0]}}, {{details.backstory[0]}} </text>
                 </div>
                 <div class="col-sm-4">
                     <button type="button" class="btnRollDice btn btn-outline-dark">Roll dice(s)</button>
@@ -33,12 +33,12 @@
                     <tr>
                         <td><p class="h5">Base AC <text class="h3 armor"></text></p></td>
                         <td><p class="h5">Spell DC <text class="h3 SpellDC"></text></p></td>
-                        <td><p class="h5">Prof <text class="h3 Prof">{{object.Proficiency}}</text></p></td>
+                        <td><p class="h5">Prof <text class="h3 Prof">{{details.Proficiency[0]}}</text></p></td>
                     </tr>
                     <tr>
                         <td><p class="h5">Base Attack <text class="h3 Attack"></text></p></td>
                         <td><p class="h5">Initiative <text class="h3 Initiative"></text></p></td>
-                        <td><p class="h5">HP <text class="h3 curHP"></text> / <text class="h3 maxHP">{{object.maxhp}}</text></p></td>
+                        <td><p class="h5">HP <text class="h3 curHP"></text> / <text class="h3 maxHP">{{details.maxhp[0]}}</text></p></td>
                     </tr>
                     <tr>
                         <td><button type="button" class="rollAttack btn btn-outline-dark">Roll Attack</button></td>
@@ -56,12 +56,12 @@
             </tr>
             <tr>
                 <td>Value</td>
-                <td class="score stren">{{object.stren}}</td>
-                <td class="score dext">{{object.dext}}</td>
-                <td class="score consti">{{object.consti}}</td>
-                <td class="score inte">{{object.inte}}</td>
-                <td class="score wisd">{{object.wisd}}</td>
-                <td class="score charis">{{object.charis}}</td>
+                <td class="score stren">{{details.stren[0]}}</td>
+                <td class="score dext">{{details.dext[0]}}</td>
+                <td class="score consti">{{details.consti[0]}}</td>
+                <td class="score inte">{{details.inte[0]}}</td>
+                <td class="score wisd">{{details.wisd[0]}}</td>
+                <td class="score charis">{{details.charis[0]}}</td>
             </tr>
             <tr>
                 <td>Modifier</td>
@@ -73,19 +73,19 @@
     <div class="row my-3">
         <div class="row">
             <p class="h3">Tools</p>
-            <p>{{object.tools}}</p>
+            <p>{{details.tools[0]}}</p>
         </div>
         <div class="row">
             <p class="h3">Proficiencies</p>
-            <p>{{object.Proficiencies|safe|linebreaks}}</p>
+            <p>{{details.Proficiencies[0]|safe}}</p>
         </div>
         <div class="row">
             <p class="h3">Languages</p>
-            <p>{{object.languages}}</p>
+            <p>{{details.languages[0]}}</p>
         </div>
         <div class="row">
             <p class="h3">Equipment</p>
-            <p>{{object.Equipment}}</p>
+            <p>{{details.Equipment[0]}}</p>
         </div>
         <div class="row">
             <table class="table"> 
@@ -96,15 +96,15 @@
                     <th>Cuprum</th>
                 </tr>
                 <tr>
-                    <td>{{object.platinum}}</td>
-                    <td>{{object.gold}}</td>
-                    <td>{{object.silver}}</td>
-                    <td>{{object.cuprum}}</td>
+                    <td>{{details.platinum[0]}}</td>
+                    <td>{{details.gold[0]}}</td>
+                    <td>{{details.silver[0]}}</td>
+                    <td>{{details.cuprum[0]}}</td>
                 </tr>
             </table>
         </div>
         <div class="row">
-            <p>{{object.skills|safe|linebreaks}}</p>
+            <p>{{details.skills[0]|safe}}</p>
         </div>
     </div>
     </div>

@@ -1,4 +1,4 @@
-{% extends "personal/header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
 
@@ -7,12 +7,13 @@
         <p>Character Library</p>
     </div>
     <div class="row align-items-center">
-        {% for char in object_list %}
+        {% for char in characters %}
         <div class="col-sm py-3">
-            <img class="rounded-circle" width="200" src="{{char.image}}"/>
+            <img class="rounded-circle" width="200"
+                 src="{{url_for('send_file', filename='media/uploads/chars/'+char.image)}}"/>
             <p class="h5">{{char.name}}</p>
             <p>{{char.race}}, {{char.klass}} {{char.level}} </p>
-            <a href="/chars/{{char.id}}">
+            <a href="/character?id={{char.id}}">
                 <button type="button" class="btn btn-outline-dark">Play</button>
             </a>
         </div>
