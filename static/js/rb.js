@@ -11,7 +11,7 @@ $(document).ready(function() {
 //    placeCookies();
 });
 
-const form_ids = ['name', 'position', 'about', 'skills', 'education', 'hobby', 'phone', 'email', 'other',
+const form_ids = ['name', 'job', 'about', 'skills', 'education', 'hobby', 'phone', 'email', 'other',
                    'from', 'to', 'desc', 'place', 'position']
 
 function placeCookies(){
@@ -34,7 +34,7 @@ function AddExp(){
 
     for (var i = 0; i < tag_list.length; i++) {
         var tag = tag_list[i]
-        var placeholder = tag[4].toUpperCase() + tag.substr(5)
+        var placeholder = tag[0].toUpperCase() + tag.substr(1)
         const element = document.createElement("input");
         element.className = "form-control"
         element.setAttribute("name", tag);

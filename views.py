@@ -51,9 +51,10 @@ def inchepurnov():
 
 @app.route('/rb')
 def get_resume():
-    params = ['name', 'about', 'position',
+    params = ['name', 'about', 'job',
               'skills', 'hobby', 'education',
-              'email', 'phone', 'contacts']
+              'email', 'phone', 'other',
+              'from', 'to', 'position', 'place', 'desc']
     data = {}
 
     for param in params:
@@ -72,26 +73,37 @@ def post_resume():
     skills = form.get('skills')
     skills = skills.split(',')
     skills = [skill.replace('+', ' ').strip() for skill in skills]
-    exp_from = form.get('from')
-    to = form.get('to')
-    place = form.get('place')
-    position = form.get('position')
-    desc = form.get('desc')
+    exp_from = form.getlist('from')
+    to = form.getlist('to')
+    place = form.getlist('place')
+    position = form.getlist('position')
+    desc = form.getlist('desc')
+
+    exp_df = pd.DataFrame(
+        {
+            'from': exp_from,
+            'to': to,
+            'place': place,
+            'position': position,
+            'desc': desc
+        }
+    )
 
     data = {
-        'name': form.get('name'),
-        'about': form.get('about'),
-        'position': form.get('position'),
-        'education': form.get('education'),
-        'hobby': form.get('hobby'),
-        'phone': form.get('phone'),
-        'email': form.get('email'),
-        'other': form.get('other')
+        'name': form.get('name').replace('+', ' '),
+        'about': form.get('about').replace('+', ' '),
+        'job': form.get('job').replace('+', ' '),
+        'education': form.get('education').replace('+', ' '),
+        'hobby': form.get('hobby').replace('+', ' '),
+        'phone': form.get('phone').replace('+', ' '),
+        'email': form.get('email').replace('+', ' '),
+        'other': form.get('other').replace('+', ' ')
     }
 
     return jsonify({'output': render_template('rb_output.html',
                                               data=data,
-                                              skills=skills)})
+                                              skills=skills,
+                                              exp_df=exp_df)})
 
 
 @app.route('/slider')
