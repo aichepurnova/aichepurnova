@@ -126,3 +126,44 @@ class QuestionBase(base):
 
         return df
 
+
+class Classes:
+    __tablename__ = 'classes'
+
+    @classmethod
+    def get_data(cls) -> pd.DataFrame:
+        """
+        Downloads data from Classes table
+        :return: df of classes
+        """
+        df = pd.read_excel('C:/Users/ChepurnA/Downloads/D&D 5e Approved Race Stats Chart.xlsx',
+                           sheet_name='classes')
+        return df
+
+
+class Races:
+    __tablename__ = 'races'
+
+    @classmethod
+    def get_data(cls) -> pd.DataFrame:
+        """
+        Downloads data from Classes table
+        :return: df of classes
+        """
+        df = pd.read_excel('C:/Users/ChepurnA/Downloads/D&D 5e Approved Race Stats Chart.xlsx',
+                           sheet_name='races')
+        return df
+
+
+class Backgrounds:
+    __tablename__ = 'backgrounds'
+
+    @classmethod
+    def get_data(cls) -> pd.DataFrame:
+        """
+        Downloads data from Classes table
+        :return: df of classes
+        """
+        df = pd.read_excel('C:/Users/ChepurnA/Downloads/D&D 5e Approved Race Stats Chart.xlsx',
+                           sheet_name='backgrounds')
+        return df

@@ -1,0 +1,112 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="h1" >
+        <p>Create New Character</p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <form>
+            <!-- Step 1. Character name-->
+                <div>Name:
+                  <p><input placeholder="Character name..." oninput="this.className = ''"></p>
+                </div>
+
+                <!-- Step 2. Class-->
+                <div>
+                    <label>Class: </label>
+                    <br>
+                    <select id="class-select">
+                        {% for row in classes.iterrows() %}
+                            <option value="{{ row.1.CLASS }}"> {{ row.1.CLASS }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                </div>
+                <br>
+
+                <!-- Step 3. Race-->
+                <div>
+                    <label>Race: </label>
+                    <br>
+                    <select>
+                    {% for row in races.iterrows() %}
+                        <option value="{{ row.1.RACE }}"> {{ row.1.RACE }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <br>
+
+                <!-- Step 4. Background-->
+                <div>
+                    <label>Background: </label>
+                    <br>
+                    <select>
+                    {% for row in backgrounds.iterrows() %}
+                        <option value="{{ row.1.BACKGROUND }}"> {{ row.1.BACKGROUND }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <br>
+
+                <!-- Step 5. Stats-->
+                <div style="display:none">
+                    <select></select>
+                </div>
+
+                <!-- Step 6. Skills-->
+                <div style="display:none">
+                    <select></select>
+                </div>
+
+
+                <!-- Step 7. Equipment-->
+                <div style="display:none">
+                    <select></select>
+                </div>
+
+                <div style="overflow:auto;">
+                  <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-8">
+            <p>Preview: </p>
+            <label>Class info: </label>
+            {% for row in classes.iterrows() %}
+                {% if row.1.CLASS == 'Cleric' %}
+                    <div name="class-{{ row.1.class }}">{{ row.1 }}</div>
+                {% else %}
+                    <div name="class-{{ row.1.class }}" style="display:none;">{{ row.1 }}</div>
+                {% endif %}
+            {% endfor %}
+
+            <label>Race info: </label>
+            {% for row in races.iterrows() %}
+                {% if row.1.RACE == 'Aarokocra' %}
+                    <div name="race-{{ row.1.RACE }}">{{ row.1 }}</div>
+                {% else %}
+                    <div name="race-{{ row.1.RACE }}" style="display:none;">{{ row.1 }}</div>
+                {% endif %}
+            {% endfor %}
+
+            <label>Background info: </label>
+            {% for row in backgrounds.iterrows() %}
+                {% if row.1.BACKGROUND == 'Acolyte' %}
+                    <div name="background-{{ row.1.BACKGROUND }}">{{ row.1 }}</div>
+                {% else %}
+                    <div name="background-{{ row.1.BACKGROUND }}" style="display:none;">{{ row.1 }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

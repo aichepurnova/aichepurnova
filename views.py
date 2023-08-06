@@ -8,7 +8,7 @@ from sqlalchemy import text
 from werkzeug.datastructures import ImmutableMultiDict
 
 from index import app, get_db_connection
-from models import Character
+from models import Character, Classes, Races, Backgrounds
 
 
 def deserialize_form(form, search_list='', immutable=True):
@@ -131,6 +131,24 @@ def character():
     details = Character.get_details(char_id)
 
     return render_template('chars_single.html', details=details)
+
+
+@app.route('/create_new_character')
+def create_new_character():
+    """
+    Takes data from dnd.su based tables
+    Renders from to add a new character
+    :return:
+    """
+
+    classes = Classes.get_data()
+    races = Races.get_data()
+    backgrounds = Backgrounds.get_data()
+
+    return render_template('chars_create.html',
+                           classes=classes,
+                           races=races,
+                           backgrounds=backgrounds)
 
 
 @app.route('/game')

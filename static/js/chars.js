@@ -1,3 +1,40 @@
+// EVENT LISTENERS
+
+var rollInitSubmit = document.querySelector('.rollInitSubmit');
+var rollDice = document.querySelector('.btnRollDice');
+var rollAttack = document.querySelector('.rollAttack');
+var HPchange = document.querySelector('.HPchange');
+
+document.addEventListener('DOMContentLoaded', getModificator);
+document.addEventListener('DOMContentLoaded', getAC);
+document.addEventListener('DOMContentLoaded', getInitiative);
+document.addEventListener('DOMContentLoaded', getSpellDC);
+document.addEventListener('DOMContentLoaded', getBaseAttack);
+rollInitSubmit.addEventListener('click', rollInitiative);
+rollDice.addEventListener('click', rollDiceFunc);
+rollAttack.addEventListener('click', dorollAttack);
+HPchange.addEventListener('click', changeHP);
+
+
+$(document).on("change", '#class-select', function(){
+    refreshParam('class');
+});
+
+$(document).on("change", '#race-select', function(){
+    refreshParam('race');
+});
+
+$(document).on("change", '#bg-select', function(){
+    refreshParam('background');
+});
+
+
+// FUNCTIONS
+
+function refreshParam(param) {
+    console.log('refresh '+param);
+};
+
 function getModificator() {
   var clas = [".inte", ".wisd", ".charis", ".consti", ".stren", ".dext"]
   for (var i in clas) {
@@ -5,20 +42,17 @@ function getModificator() {
       modif.textContent = Math.floor((document.querySelector('.score'+clas[i]).innerHTML-10)/2);
   };
 };
-document.addEventListener('DOMContentLoaded', getModificator);
 
 function getAC() {
   var AC = document.querySelector('.armor');
   AC.textContent = Number((document.querySelector('.modif.dext').innerHTML)) + Number(13);
   // AC.textContent = '2';
 };
-document.addEventListener('DOMContentLoaded', getAC);
 
 function getInitiative() {
   var Initiative = document.querySelector('.Initiative');
   Initiative.textContent = (document.querySelector('.modif.dext').innerHTML);
 };
-document.addEventListener('DOMContentLoaded', getInitiative);
 
 function getSpellDC() {
   var SpellDC = document.querySelector('.SpellDC');
@@ -31,7 +65,6 @@ function getSpellDC() {
   };
   SpellDC.textContent = Number(8) + Number(Prof) + Number(Math.max(...modifs));
 };
-document.addEventListener('DOMContentLoaded', getSpellDC);
 
 function getBaseAttack() {
   var Attack = document.querySelector('.Attack');
@@ -44,7 +77,6 @@ function getBaseAttack() {
   };
   Attack.textContent =  Number(Prof) + Number(Math.max(...modifs));
 };
-document.addEventListener('DOMContentLoaded', getBaseAttack);
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -52,7 +84,6 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 };
 
-var rollInitSubmit = document.querySelector('.rollInitSubmit');
 function rollInitiative() {
   var Initiative = Number(document.querySelector('.Initiative').innerHTML);
   var randnum = Number(getRandomIntInclusive(1,20))
@@ -61,9 +92,7 @@ function rollInitiative() {
   console.log('Результат броска инициативы: '+ Number(Initiative+randnum)
   + ' (' + Initiative + ' + ' + randnum + ')');
 };
-rollInitSubmit.addEventListener('click', rollInitiative);
 
-var rollDice = document.querySelector('.btnRollDice');
 function rollDiceFunc() {
   let diceQty = Number(prompt("Please enter dice qty:", 1));
   let diceValue = Number(prompt("Please enter dice value:", 20));
@@ -78,9 +107,7 @@ function rollDiceFunc() {
   alert('Результат броска: '+ totResult + ' (' + diceQty + 'd' + diceValue + '+' + modificat + ') ');
   console.log('Результат броска: '+ totResult+ ' (' + diceQty + 'd' + diceValue + '+' + modificat + ') ');
 };
-rollDice.addEventListener('click', rollDiceFunc);
 
-var rollAttack = document.querySelector('.rollAttack');
 function dorollAttack() {
   var Attack = Number(document.querySelector('.Attack').innerHTML);
   var randnum = Number(getRandomIntInclusive(1,20));
@@ -96,9 +123,7 @@ function dorollAttack() {
       alert('Результат броска: '+ result+ ' (' + Attack + ' + ' + randnum + ')');
       console.log('Результат броска: '+ result + ' (' + Attack + ' + ' + randnum + ')')}};
 };
-rollAttack.addEventListener('click', dorollAttack);
 
-var HPchange = document.querySelector('.HPchange');
 function changeHP() { 
   if (Number(document.querySelector('.curHP').innerHTML) == 0) {
     var curHP = Number(document.querySelector('.maxHP').innerHTML);
@@ -121,4 +146,3 @@ function changeHP() {
     console.log('Похоже, что ты умер.....');
   };
 };
-HPchange.addEventListener('click', changeHP);
