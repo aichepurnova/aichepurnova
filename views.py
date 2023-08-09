@@ -133,7 +133,7 @@ def character():
     return render_template('chars_single.html', details=details)
 
 
-@app.route('/create_new_character')
+@app.route('/chars/create_new_character')
 def create_new_character():
     """
     Takes data from dnd.su based tables
@@ -145,11 +145,58 @@ def create_new_character():
     races = Races.get_data()
     backgrounds = Backgrounds.get_data()
 
-    return render_template('chars_create.html',
-                           classes=classes,
-                           races=races,
-                           backgrounds=backgrounds)
+    classes_list = list(classes['class'])
+    races_list = list(races['race_full'])
+    backgrounds_list = list(backgrounds['background'])
 
+    # cl = request.args.get('class')
+    # if cl:
+    #     classes = classes[classes['class'] == cl].reset_index(drop=True)
+    #
+    # race = request.args.get('race')
+    # if race:
+    #     races = races[races['race'] == race].reset_index(drop=True)
+    #
+    # bg = request.args.get('bg')
+    # if bg:
+    #     backgrounds = backgrounds[backgrounds['background'] == bg].reset_index(drop=True)
+
+    preview = {
+        'class': classes['class'][0],
+        'race': races['race_full'][0],
+        'background': backgrounds['background'][0],
+        'size': races['size'][0],
+        'speed': races['speed'][0],
+        'dice': classes['dice'][0],
+        'saves': classes['saves'][0],
+        'bonuses': races['bonuses'][0],
+
+        'proficiencies': {
+            'class': classes['proficiencies'][0],
+            'bg': backgrounds['proficiencies'][0]
+        },
+
+        'tools': {
+            'class': classes['tools'][0],
+            'bg': backgrounds['tools'][0]
+        },
+
+        'languages': {
+            'race': races['languages'][0],
+            'bg': backgrounds['languages'][0]
+        },
+
+        'skills': {
+            'class': classes['skills'][0],
+            'race': races['skills'][0]
+        }
+    }
+
+    return render_template('chars_create.html',
+                           classes=classes_list,
+                           races=races_list,
+                           backgrounds=backgrounds_list,
+                           preview=preview)
 
 @app.route('/game')
 def game():

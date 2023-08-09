@@ -1,6 +1,7 @@
 import sqlite3
 
 from flask import Flask
+from flask_restful import Api
 
 
 def get_db_connection():
@@ -10,5 +11,7 @@ def get_db_connection():
 
 
 app = Flask(__name__, static_url_path="", static_folder="static")
+api = Api(app)
 
 import views
+import api_resources

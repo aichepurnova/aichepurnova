@@ -2,17 +2,21 @@
 
 {% block content %}
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="{{url_for('static', filename='js/chars_create.js')}}" defer> </script>
+
+
 <div class="container">
     <div class="h1" >
         <p>Create New Character</p>
     </div>
 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-md-auto">
             <form>
             <!-- Step 1. Character name-->
                 <div>Name:
-                  <p><input placeholder="Character name..." oninput="this.className = ''"></p>
+                  <p><input placeholder="Character name..."></p>
                 </div>
 
                 <!-- Step 2. Class-->
@@ -20,8 +24,12 @@
                     <label>Class: </label>
                     <br>
                     <select id="class-select">
-                        {% for row in classes.iterrows() %}
-                            <option value="{{ row.1.CLASS }}"> {{ row.1.CLASS }}</option>
+                        {% for class in classes %}
+                            {% if class == preview.class %}
+                                <option value="{{ class }}" selected="selected"> {{ class }}</option>
+                            {% else %}
+                                <option value="{{ class }}"> {{ class }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <br>
@@ -32,9 +40,13 @@
                 <div>
                     <label>Race: </label>
                     <br>
-                    <select>
-                    {% for row in races.iterrows() %}
-                        <option value="{{ row.1.RACE }}"> {{ row.1.RACE }}</option>
+                    <select id="race-select">
+                    {% for race in races %}
+                        {% if race == preview.race %}
+                            <option value="{{ race }}" selected="selected"> {{ race }}</option>
+                        {% else %}
+                            <option value="{{ race }}"> {{ race }}</option>
+                        {% endif %}
                     {% endfor %}
                     </select>
                 </div>
@@ -44,66 +56,101 @@
                 <div>
                     <label>Background: </label>
                     <br>
-                    <select>
-                    {% for row in backgrounds.iterrows() %}
-                        <option value="{{ row.1.BACKGROUND }}"> {{ row.1.BACKGROUND }}</option>
+                    <select id="bg-select">
+                    {% for background in backgrounds %}
+                        {% if background == preview.background %}
+                            <option value="{{ background }}" selected="selected"> {{ background }}</option>
+                        {% else %}
+                            <option value="{{ background }}"> {{ background }}</option>
+                        {% endif %}
                     {% endfor %}
                     </select>
                 </div>
                 <br>
 
-                <!-- Step 5. Stats-->
-                <div style="display:none">
-                    <select></select>
-                </div>
-
-                <!-- Step 6. Skills-->
-                <div style="display:none">
-                    <select></select>
-                </div>
-
-
-                <!-- Step 7. Equipment-->
-                <div style="display:none">
-                    <select></select>
-                </div>
-
                 <div style="overflow:auto;">
-                  <div style="float:right;">
-                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                  <div style="float:left;">
+                    <button type="button" id="nextBtn" class="btnRollDice btn btn-outline-dark">Next</button>
                   </div>
                 </div>
             </form>
         </div>
-        <div class="col-sm-8">
-            <p>Preview: </p>
-            <label>Class info: </label>
-            {% for row in classes.iterrows() %}
-                {% if row.1.CLASS == 'Cleric' %}
-                    <div name="class-{{ row.1.class }}">{{ row.1 }}</div>
-                {% else %}
-                    <div name="class-{{ row.1.class }}" style="display:none;">{{ row.1 }}</div>
-                {% endif %}
-            {% endfor %}
-
-            <label>Race info: </label>
-            {% for row in races.iterrows() %}
-                {% if row.1.RACE == 'Aarokocra' %}
-                    <div name="race-{{ row.1.RACE }}">{{ row.1 }}</div>
-                {% else %}
-                    <div name="race-{{ row.1.RACE }}" style="display:none;">{{ row.1 }}</div>
-                {% endif %}
-            {% endfor %}
-
-            <label>Background info: </label>
-            {% for row in backgrounds.iterrows() %}
-                {% if row.1.BACKGROUND == 'Acolyte' %}
-                    <div name="background-{{ row.1.BACKGROUND }}">{{ row.1 }}</div>
-                {% else %}
-                    <div name="background-{{ row.1.BACKGROUND }}" style="display:none;">{{ row.1 }}</div>
-                {% endif %}
-            {% endfor %}
+        <div class="col-lg-auto">
+            <h5>Stats Preview</h5>
+            <div class="tg-wrap">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <td>Parameter</td>
+                        <td>Source</td>
+                        <td>Value</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                       <tr>
+                        <td>Size</td>
+                        <td>Race</td>
+                        <td id="info-size">{{ preview.size }}</td>
+                      </tr>
+                      <tr>
+                        <td>Speed</td>
+                        <td>Race</td>
+                        <td id="info-speed">{{ preview.speed }}</td>
+                      </tr>
+                      <tr>
+                        <td>Hit dice</td>
+                        <td>Class</td>
+                        <td id="info-dice">{{ preview.dice }}</td>
+                      </tr>
+                      <tr>
+                        <td>Saves</td>
+                        <td>Class</td>
+                        <td id="info-saves">{{ preview.saves }}</td>
+                      </tr>
+                      <tr>
+                        <td>Stat Bonus</td>
+                        <td>Race</td>
+                        <td id="info-bonuses">{{ preview.bonuses }}</td>
+                      </tr>
+                      <tr>
+                        <td rowspan="2">Proficiencies</td>
+                        <td>Class</td>
+                        <td id="info-proficiencies-class">{{ preview.proficiencies.class }}</td>
+                      </tr>
+                      <tr>
+                        <td>Background</td>
+                        <td id="info-proficiencies-bg">{{ preview.proficiencies.bg }}</td>
+                      </tr>
+                      <tr>
+                        <td rowspan="2">Tools</td>
+                        <td>Class</td>
+                        <td id="info-tools-class">{{ preview.tools.class }}</td>
+                      </tr>
+                      <tr>
+                        <td>Background</td>
+                        <td id="info-tools-bg">{{ preview.tools.bg }}</td>
+                      </tr>
+                      <tr>
+                        <td rowspan="2">Languages</td>
+                        <td>Race</td>
+                        <td id="info-languages-race">{{ preview.languages.race }}</td>
+                      </tr>
+                      <tr>
+                        <td>Background</td>
+                        <td id="info-languages-bg">{{ preview.languages.bg }}</td>
+                      </tr>
+                      <tr>
+                        <td rowspan="2">Skills</td>
+                        <td>Class</td>
+                        <td id="info-skills-class">{{preview.skills.class }}</td>
+                      </tr>
+                      <tr>
+                        <td>Race</td>
+                        <td id="info-skills-race">{{ preview.skills.race }}</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
