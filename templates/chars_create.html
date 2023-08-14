@@ -11,15 +11,12 @@
         <p>Create New Character</p>
     </div>
 
-    <div class="row">
+    <div class="row" id="step1">
         <div class="col-md-auto">
             <form>
-            <!-- Step 1. Character name-->
                 <div>Name:
                   <p><input placeholder="Character name..."></p>
                 </div>
-
-                <!-- Step 2. Class-->
                 <div>
                     <label>Class: </label>
                     <br>
@@ -35,8 +32,6 @@
                     <br>
                 </div>
                 <br>
-
-                <!-- Step 3. Race-->
                 <div>
                     <label>Race: </label>
                     <br>
@@ -51,8 +46,6 @@
                     </select>
                 </div>
                 <br>
-
-                <!-- Step 4. Background-->
                 <div>
                     <label>Background: </label>
                     <br>
@@ -70,7 +63,7 @@
 
                 <div style="overflow:auto;">
                   <div style="float:left;">
-                    <button type="button" id="nextBtn" class="btnRollDice btn btn-outline-dark">Next</button>
+                    <button type="button" id="btn-step2" class="btnRollDice btn btn-outline-dark">Next</button>
                   </div>
                 </div>
             </form>
@@ -150,6 +143,163 @@
                       </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="step2" style="display:none;">
+        <div class="col-sm-auto">
+            <h5>Step 2. Ability scores BEFORE racial bonus</h5>
+            <br>
+            <p>Class: <b id="info-class">{{preview.class}}</b></p>
+            <p>Race: <b id="info-race">{{preview.race}}</b></p>
+            <p>Background: <b id="info-background">{{preview.background}}</b></p>
+            <p>Stat Bonus:  <b id="info-bonuses-step2">{{preview.bonuses}}</b></p>
+            <div>
+                <button type="button" id="btn-roll4d6" class="btn btn-primary">Roll 4d6-min(d6)</button>
+                 or
+                <button type="button" id="btn-roll3d6" class="btn btn-primary">Roll 3d6</button>
+            </div>
+        </div>
+        <div class="col-md-auto">
+            <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <td>Stat</td>
+                    <td>Value</td>
+                    <td>Lower</td>
+                    <td>Upper</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Strength</td>
+                    <td>
+                        <input maxlength="2" class="form-control input-sm" style="width:4em;" value="15" id="stat-str-val">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-str-dn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-str-up">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dexterity</td>
+                    <td>
+                         <input maxlength="2" class="form-control input-sm" style="width:4em;" value="14" id="stat-dex-val">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-dex-dn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-dex-up">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Constitution</td>
+                    <td>
+                        <input maxlength="2" class="form-control input-sm" style="width:4em;" value="13" id="stat-con-val">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-con-dn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-con-up">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Intelligence</td>
+                    <td>
+                        <input maxlength="2" class="form-control input-sm" style="width:4em;" value="12" id="stat-int-val">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-int-dn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-int-up">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wisdom</td>
+                    <td>
+                        <input maxlength="2" class="form-control input-sm" style="width:4em;" value="10" id="stat-wis-val">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-wis-dn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-wis-up">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Charisma</td>
+                    <td>
+                        <input maxlength="2" class="form-control input-sm" style="width:4em;" value="8" id="stat-cha-val">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-cha-dn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" id="stat-cha-up">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            <div style="overflow:auto;">
+                <div style="float:left;">
+                    <button type="button" id="btn-step1" class="btn btn-outline-dark">Go back</button>
+                </div>
+                <div style="float:right;">
+                    <button type="button" id="btn-step3" class="btn btn-outline-dark">Next</button>
+                </div>
             </div>
         </div>
     </div>

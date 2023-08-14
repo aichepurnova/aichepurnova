@@ -21,6 +21,9 @@ class CharsParams(Resource):
         backgrounds = backgrounds[backgrounds['background'] == data['bg']].reset_index(drop=True)
 
         preview = {
+            'class': [data['cl']],
+            'race': [data['race']],
+            'background':[data['bg']],
             'size': [races['size'][0]],
             'speed': [races['speed'][0]],
             'dice': [classes['dice'][0]],
