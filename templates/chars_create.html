@@ -117,7 +117,7 @@
                       <tr>
                         <td rowspan="2">Tools</td>
                         <td>Class</td>
-                        <td id="info-tools-class">{{ preview.tools.class }}</td>
+                        <td id="info-tools-class" style="word-wrap:break-word;width:30em">{{ preview.tools.class }}</td>
                       </tr>
                       <tr>
                         <td>Background</td>
@@ -161,7 +161,7 @@
             </div>
         </div>
         <div class="col-md-auto">
-            <table class="table table-responsive table-hover">
+            <table class="table table-hover">
             <thead>
                 <tr>
                     <td>Stat</td>
@@ -300,6 +300,29 @@
                 <div style="float:right;">
                     <button type="button" id="btn-step3" class="btn btn-outline-dark">Next</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="step3" style="display:none;">
+        <h5>Step 3. Choose profieciencies</h5>
+        <div id="choose-prof">
+            <p>From class: <span id="prof-class-step3"></span></p>
+            <p>From background: <span id="prof-bg-step3"></span></p>
+            <ul class="list-unstyled row">
+            {% for ability in preview.proficiencies.all %}
+                <li class="list-group-item col-4">
+                    <input class="proficiencies" id="prof-{{loop.index0}}" type="checkbox">
+                    <label for="prof-{{loop.index0}}" class="control-label">{{ability}}</label>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div style="overflow:auto;">
+            <div style="float:left;">
+                <button type="button" id="btn-step2-back" class="btn btn-outline-dark">Go back</button>
+            </div>
+            <div style="float:right;">
+                <button type="button" id="btn-step4" class="btn btn-outline-dark">Next</button>
             </div>
         </div>
     </div>

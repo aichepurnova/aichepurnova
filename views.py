@@ -145,21 +145,9 @@ def create_new_character():
     races = Races.get_data()
     backgrounds = Backgrounds.get_data()
 
-    classes_list = list(classes['class'])
+    classes_list = list(classes['class'].unique())
     races_list = list(races['race_full'])
     backgrounds_list = list(backgrounds['background'])
-
-    # cl = request.args.get('class')
-    # if cl:
-    #     classes = classes[classes['class'] == cl].reset_index(drop=True)
-    #
-    # race = request.args.get('race')
-    # if race:
-    #     races = races[races['race'] == race].reset_index(drop=True)
-    #
-    # bg = request.args.get('bg')
-    # if bg:
-    #     backgrounds = backgrounds[backgrounds['background'] == bg].reset_index(drop=True)
 
     preview = {
         'class': classes['class'][0],
@@ -173,7 +161,11 @@ def create_new_character():
 
         'proficiencies': {
             'class': classes['proficiencies'][0],
-            'bg': backgrounds['proficiencies'][0]
+            'bg': backgrounds['proficiencies'][0],
+            'all': ['Athletics (STR)', 'Acrobatics (DEX)', 'Sleight of Hand (DEX)', 'Stealth (DEX)',
+                    'Arcana (INT)', 'History (INT)', 'Investigation (INT)', 'Nature (INT)', 'Religion (INT)',
+                    'Animal Handling (WIS)', 'Insight (WIS)', 'Medicine (WIS)', 'Perception (WIS)', 'Survival (WIS)',
+                    'Deception (CHA)', 'Intimidation (CHA)', 'Performance (CHA)', 'Persuasion (CHA)']
         },
 
         'tools': {

@@ -4,7 +4,14 @@ $('#bg-select').change(function(){changeParam()});
 
 $('#btn-step1').click(function(){changeStep('step1')});
 $('#btn-step2').click(function(){changeStep('step2')});
-//$('#btn-step3').click(function(){changeStep('step3')});
+$('#btn-step2-back').click(function(){changeStep('step2')});
+//TODO: validate stats when next
+
+$('#btn-step3').click(function(){
+    changeStep('step3');
+    updateProfs();
+});
+//TODO: validate profs when checked
 
 $('#btn-roll4d6').click(function(){changeStats(4)});
 $('#btn-roll3d6').click(function(){changeStats(3)});
@@ -57,7 +64,7 @@ function changeStep(step){
     step = '#'+step
     $('#step1')[0].style.display = "none";
     $('#step2')[0].style.display = "none";
-//    $('#step3').style.display = "none";
+    $('#step3')[0].style.display = "none";
     $(step)[0].style.display = "flex";
 };
 
@@ -109,3 +116,39 @@ function moveStat(id) {
     $(fst_stat)[0].setAttribute('value', snd_stat_value)
     $(snd_stat)[0].setAttribute('value', fst_stat_value)
 };
+
+function updateProfs() {
+    var profs_bg = $('#info-proficiencies-bg')[0].innerHTML
+    var profs_class = $('#info-proficiencies-class')[0].innerHTML
+
+    $('#prof-class-step3')[0].innerHTML = profs_class
+    $('#prof-bg-step3')[0].innerHTML = profs_bg
+
+    profs_bg = profs_bg.toLowerCase();
+    profs_class = profs_class.toLowerCase();
+    defaults = profs_bg.split('choose')[0];
+
+    for (i=0; i<18; i++) {
+        let prof_tag = "#prof-"+i
+        let prof_value = $(prof_tag).parent().find("label")[0].innerHTML
+        prof_value = prof_value.replace(prof_value.substr(-6), '')
+        prof_value = prof_value.toLowerCase()
+
+        $(prof_tag).prop("checked", false);
+
+        if ((profs_class.includes('any')) || (profs_bg.includes('any')) ||
+        (profs_class.includes(prof_value)) || (profs_bg.includes(prof_value)))  {
+            $(prof_tag).prop("disabled", false);
+            $(prof_tag).parent().find("label").css("color", "#000000");
+        }
+        else {
+            $(prof_tag).prop("disabled", true);
+            $(prof_tag).parent().find("label").css("color", "#dadada");
+        }
+
+        if (defaults.includes(prof_value)) {
+            $(prof_tag).prop("checked", true);
+        }
+    }
+};
+
