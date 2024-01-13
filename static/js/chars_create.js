@@ -1,3 +1,5 @@
+const stats = ['str', 'dex', 'con', 'int', 'wis', 'cha']
+
 $('#class-select').change(function(){changeParam()});
 $('#race-select').change(function(){changeParam()});
 $('#bg-select').change(function(){changeParam()});
@@ -5,18 +7,45 @@ $('#bg-select').change(function(){changeParam()});
 $('#btn-step1').click(function(){changeStep('step1')});
 $('#btn-step2').click(function(){changeStep('step2')});
 $('#btn-step2-back').click(function(){changeStep('step2')});
-//TODO: validate stats when next
-
 $('#btn-step3').click(function(){
-    changeStep('step3');
-    updateProfs();
-});
-//TODO: validate profs when checked
+    ok_array = []
+    not_ok_array = []
+    for (i=0; i < stats.length; i++){
+        let stat = '#stat-'+stats[i]+'-val'
+        if ($(stat)[0].value < 21 & $(stat)[0].value > 2) {
+            ok_array.push(stat)
+        }
+        else {
+            not_ok_array.push(stat.split('-')[1])
+        }
+    };
+    if (ok_array.length == stats.length) {
+        changeStep('step3');
+        updateProfs();
+    }
+    else {
+        alert("Your stats should be between 3 and 20. Those stats are incorrect: \n" + not_ok_array);
+    }
 
+});
+$('#btn-step4').click(function(){
+    let profs_bg = $('#prof-bg-step3')[0].innerHTML
+    let profs_class = $('#prof-class-step3')[0].innerHTML
+
+    profs_bg = profs_bg.toLowerCase();
+    profs_class = profs_class.toLowerCase();
+    defaults = profs_bg.split('choose')[0];
+
+    max_bg = defaults.split(',').length
+    max_class = profs_class.split(' ').length
+
+    form = $('#chars-create-form')
+    changeStep('step4')
+});
+
+//TODO: validate profs when checked
 $('#btn-roll4d6').click(function(){changeStats(4)});
 $('#btn-roll3d6').click(function(){changeStats(3)});
-
-const stats = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
 for (i=0; i < stats.length; i++){
     let btn_dn = '#stat-'+stats[i]+'-dn'
@@ -85,6 +114,7 @@ function changeStats(method){
         // Replace value
         let stat = '#stat-'+stats[j] +'-val'
         $(stat)[0].setAttribute('value', new_value)
+        $(stat)[0].value = new_value
     }
 
 
@@ -114,7 +144,9 @@ function moveStat(id) {
     fst_stat_value = $(fst_stat)[0].value
     snd_stat_value = $(snd_stat)[0].value
     $(fst_stat)[0].setAttribute('value', snd_stat_value)
+    $(fst_stat)[0].value =  snd_stat_value
     $(snd_stat)[0].setAttribute('value', fst_stat_value)
+    $(snd_stat)[0].value =  fst_stat_value
 };
 
 function updateProfs() {
