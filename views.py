@@ -1,3 +1,4 @@
+import json
 import os
 import urllib
 
@@ -145,12 +146,12 @@ def create_new_character():
     races = Races.get_data()
     backgrounds = Backgrounds.get_data()
 
-    classes_list = list(classes['class'].unique())
+    classes_list = list(classes['class_en'].unique())
     races_list = list(races['race_full'])
     backgrounds_list = list(backgrounds['background'])
 
     preview = {
-        'class': classes['class'][0],
+        'class': classes['class_en'][0],
         'race': races['race_full'][0],
         'background': backgrounds['background'][0],
         'size': races['size'][0],
@@ -179,7 +180,7 @@ def create_new_character():
         },
 
         'skills': {
-            'class': classes['skills'][0],
+            'class': classes['starting_skills'][0],
             'race': races['skills'][0]
         }
     }

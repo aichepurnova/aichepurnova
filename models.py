@@ -5,6 +5,8 @@ from sqlalchemy import Column, BigInteger, String, Integer, Float, null, \
     literal
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
+from bs4 import BeautifulSoup
+import requests as req
 
 
 dwh_db = sqlalchemy.create_engine('sqlite:///db.sqlite3')
@@ -127,43 +129,179 @@ class QuestionBase(base):
         return df
 
 
-class Classes:
+class Classes(base):
     __tablename__ = 'classes'
 
+    index = Column(Integer, primary_key=True)
+    class_en = Column(String)
+    href = Column(String)
+    table = Column(String)
+    descriptions = Column(String)
+    dice = Column(String)
+    tools = Column(String)
+    saves = Column(String)
+    equipment = Column(String)
+    starting_skills = Column(String)
+    proficiencies = Column(String)
+
     @classmethod
-    def get_data(cls) -> pd.DataFrame:
-        """
-        Downloads data from Classes table
-        :return: df of classes
-        """
-        df = pd.read_excel('C:/Users/ChepurnA/Downloads/D&D 5e Approved Race Stats Chart.xlsx',
-                           sheet_name='classes')
+    def get_data(cls, class_en = None):
+        if class_en:
+            query = dwh_session.query(cls).filter(cls.class_en == class_en)
+        else:
+            query = dwh_session.query(cls)
+        conn = dwh_db.connect()
+        df = pd.read_sql(query.statement, conn)
+        conn.close()
         return df
 
 
-class Races:
+
+class Races(base):
     __tablename__ = 'races'
 
+    index = Column(Integer, primary_key=True)
+    race = Column(String(140))
+    subrace = Column(String(140))
+    size = Column(String(140))
+    speed = Column(String(140))
+    strength = Column(String(140))
+    dex = Column(String(140))
+    con = Column(String(140))
+    intellegence = Column(String(140))
+    wis = Column(String(140))
+    cha = Column(String(140))
+    stat = Column(String(140))
+    race_full = Column(String(140))
+    bonuses = Column(String(140))
+    languages = Column(String(140))
+    skills = Column(String(140))
+    source = Column(String(140))
+
     @classmethod
-    def get_data(cls) -> pd.DataFrame:
+    def get_data(cls, filters_dict: dict = {}, out_cols: list = []) -> pd.DataFrame:
         """
-        Downloads data from Classes table
-        :return: df of classes
+        Download data from APT database
+        :param filters_dict: key represents column in table, value accepts value / list / dictionary
+        :param out_cols: optional, columns to be downloaded
+        :return:
         """
-        df = pd.read_excel('C:/Users/ChepurnA/Downloads/D&D 5e Approved Race Stats Chart.xlsx',
-                           sheet_name='races')
+
+        # define filters based on defaults and filters_dict
+        # default: none
+        filters = []
+        for col, value in filters_dict.items():
+            # filter value defined in dict
+            if isinstance(value, dict):
+                if value['operator'] == 'in':
+                    if value['negate']:
+                        filters.append(~getattr(cls, col).in_(value['value']))
+                    else:
+                        filters.append(getattr(cls, col).in_(value['value']))
+                elif value['operator'] == 'like':
+                    if value['negate']:
+                        filters.append(~getattr(cls, col).ilike(f"%{value['value']}%"))
+                    else:
+                        filters.append(getattr(cls, col).ilike(f"%{value['value']}%"))
+                elif value['operator'] == 'between':
+                    filters.append(getattr(cls, col).between(min(value['value']), max(value['value'])))
+                elif value['operator'] == 'greater equal':
+                    filters.append(getattr(cls, col) >= max(value['value']))
+                elif value['operator'] == 'greater':
+                    filters.append(getattr(cls, col) > max(value['value']))
+                elif value['operator'] == 'smaller equal':
+                    filters.append(getattr(cls, col) >= max(value['value']))
+                elif value['operator'] == 'smaller':
+                    filters.append(getattr(cls, col) >= max(value['value']))
+                else:
+                    if value['negate']:
+                        filters.append(getattr(cls, col) != value['value'])
+                    else:
+                        filters.append(getattr(cls, col) == value['value'])
+            # filter value passed in list
+            elif isinstance(value, list):
+                if len(value) > 0:
+                    filters.append(getattr(cls, col).in_(value))
+            else:
+                filters.append(getattr(cls, col) == value)
+
+        if out_cols:
+            cols = [cls.__dict__[k] for k in out_cols]
+            query = dwh_session.query(*cols).filter(and_(*filters))
+        else:
+            query = dwh_session.query(cls).filter(and_(*filters))
+
+        # download
+        df = pd.read_sql(query.statement, dwh_db.connect())
+
         return df
 
 
-class Backgrounds:
+class Backgrounds(base):
     __tablename__ = 'backgrounds'
 
+    index = Column(Integer, primary_key=True)
+    background = Column(String)
+    languages = Column(String)
+    source = Column(String)
+    page = Column(String)
+    tools = Column(String)
+    proficiencies = Column(String)
+
     @classmethod
-    def get_data(cls) -> pd.DataFrame:
+    def get_data(cls, filters_dict: dict = {}, out_cols: list = []) -> pd.DataFrame:
         """
-        Downloads data from Classes table
-        :return: df of classes
+        Download data from APT database
+        :param filters_dict: key represents column in table, value accepts value / list / dictionary
+        :param out_cols: optional, columns to be downloaded
+        :return:
         """
-        df = pd.read_excel('C:/Users/ChepurnA/Downloads/D&D 5e Approved Race Stats Chart.xlsx',
-                           sheet_name='backgrounds')
+
+        # define filters based on defaults and filters_dict
+        # default: none
+        filters = []
+        for col, value in filters_dict.items():
+            # filter value defined in dict
+            if isinstance(value, dict):
+                if value['operator'] == 'in':
+                    if value['negate']:
+                        filters.append(~getattr(cls, col).in_(value['value']))
+                    else:
+                        filters.append(getattr(cls, col).in_(value['value']))
+                elif value['operator'] == 'like':
+                    if value['negate']:
+                        filters.append(~getattr(cls, col).ilike(f"%{value['value']}%"))
+                    else:
+                        filters.append(getattr(cls, col).ilike(f"%{value['value']}%"))
+                elif value['operator'] == 'between':
+                    filters.append(getattr(cls, col).between(min(value['value']), max(value['value'])))
+                elif value['operator'] == 'greater equal':
+                    filters.append(getattr(cls, col) >= max(value['value']))
+                elif value['operator'] == 'greater':
+                    filters.append(getattr(cls, col) > max(value['value']))
+                elif value['operator'] == 'smaller equal':
+                    filters.append(getattr(cls, col) >= max(value['value']))
+                elif value['operator'] == 'smaller':
+                    filters.append(getattr(cls, col) >= max(value['value']))
+                else:
+                    if value['negate']:
+                        filters.append(getattr(cls, col) != value['value'])
+                    else:
+                        filters.append(getattr(cls, col) == value['value'])
+            # filter value passed in list
+            elif isinstance(value, list):
+                if len(value) > 0:
+                    filters.append(getattr(cls, col).in_(value))
+            else:
+                filters.append(getattr(cls, col) == value)
+
+        if out_cols:
+            cols = [cls.__dict__[k] for k in out_cols]
+            query = dwh_session.query(*cols).filter(and_(*filters))
+        else:
+            query = dwh_session.query(cls).filter(and_(*filters))
+
+        # download
+        df = pd.read_sql(query.statement, dwh_db.connect())
+
         return df

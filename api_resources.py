@@ -16,7 +16,7 @@ class CharsParams(Resource):
         races = Races.get_data()
         backgrounds = Backgrounds.get_data()
 
-        classes = classes[classes['class'] == data['cl']].reset_index(drop=True)
+        classes = classes[classes['class_en'] == data['cl']].reset_index(drop=True)
         races = races[races['race_full'] == data['race']].reset_index(drop=True)
         backgrounds = backgrounds[backgrounds['background'] == data['bg']].reset_index(drop=True)
 
@@ -35,7 +35,7 @@ class CharsParams(Resource):
             'tools-bg': [backgrounds['tools'][0]],
             'languages-race': [races['languages'][0]],
             'languages-bg': [backgrounds['languages'][0]],
-            'skills-class': [classes['skills'][0]],
+            'skills-class': [classes['starting_skills'][0]],
             'skills-race': [races['skills'][0]]
             }
 
