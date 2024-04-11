@@ -5,3 +5,4 @@
 /.idea/
 /venv/bin/
 /venv/
+/chars/node_modules
