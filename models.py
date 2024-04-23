@@ -1,12 +1,8 @@
 import pandas as pd
 import sqlalchemy
-from sqlalchemy import Column, BigInteger, String, Integer, Float, null, \
-    DateTime, and_, or_, func, cast, Date, Sequence, ForeignKey, Boolean, \
-    literal
+from sqlalchemy import Column, String, Integer, and_
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker, relationship
-from bs4 import BeautifulSoup
-import requests as req
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 dwh_db = sqlalchemy.create_engine('sqlite:///db.sqlite3')
@@ -55,6 +51,14 @@ class Character(base):
     @classmethod
     def get_details(cls, char_id):
         query = dwh_session.query(cls).filter(cls.id == char_id)
+        conn = dwh_db.connect()
+        df = pd.read_sql(query.statement, conn)
+        conn.close()
+        return df
+
+    @classmethod
+    def get_chars(cls):
+        query = dwh_session.query(cls)
         conn = dwh_db.connect()
         df = pd.read_sql(query.statement, conn)
         conn.close()

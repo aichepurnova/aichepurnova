@@ -43,4 +43,7 @@ class CharsParams(Resource):
         return Response(df.to_json(orient="records"), mimetype='application/json')
 
 
+
+
 api.add_resource(CharsParams, '/chars/get_chars_params')
+
