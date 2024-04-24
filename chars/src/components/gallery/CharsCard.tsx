@@ -17,7 +17,7 @@ interface Props {
 function CharsCard({ char, onClick }: Props) {
   const img_link = "/media/media/uploads/chars/" + char.image;
   return (
-    <li className={CSS["charsCard"]}>
+    <div>
       <img
         className={CSS["charsImage"]}
         width="200"
@@ -34,7 +34,7 @@ function CharsCard({ char, onClick }: Props) {
       <button onClick={() => onClick(String("char=" + char.id))}>
         Play {char.id}
       </button>
-    </li>
+    </div>
   );
 }
 

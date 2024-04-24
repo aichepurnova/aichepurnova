@@ -1,0 +1,75 @@
+.skillWrapper {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin-left: 10px;
+    padding: auto;  
+}
+
+.skillBasic {
+    display: flex;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: solid 2px black
+}
+
+.skillProf {
+    display: flex;
+    width: 10px;
+    height: 10px;
+    background-color: gray;
+    border-radius: 50%;
+    border: solid 2px black
+}
+
+.skillComp {
+    display: flex;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    border: solid 2px black
+}
+
+.statsBlock {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+
+.statBlock {
+    margin-bottom: 5px;
+}
+
+.statSingle {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.statName {
+    font-weight: bold;
+}
+
+.statValue {
+    display: flex;
+    border: solid 1px black;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.statModif {
+    display: flex;
+    font-size: small;
+    margin-top: 3px;
+}

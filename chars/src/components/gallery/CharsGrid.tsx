@@ -1,5 +1,6 @@
 import useData from "../../hooks/useData";
 import Loader from "../functional/Loader";
+import Error from "../functional/Error";
 import CharsCard, { CharsCardProps } from "./CharsCard";
 import CSS from "./gallery.module.css";
 
@@ -17,11 +18,15 @@ function CharsGrid({ onClick }: Props) {
   return (
     <div>
       {isLoading ? <Loader visible></Loader> : null}
-      {error ? <p>Error</p> : null}
+      {error ? <Error></Error> : null}
       {data ? (
         <ul className={CSS["charsGrid"]}>
           {data.chars.map((char) => {
-            return <CharsCard char={char} onClick={onClick}></CharsCard>;
+            return (
+              <li className={CSS["charsCard"]} key={char.id}>
+                <CharsCard char={char} onClick={onClick}></CharsCard>
+              </li>
+            );
           })}
         </ul>
       ) : null}

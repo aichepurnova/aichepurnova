@@ -35,14 +35,14 @@ class Character(base):
     wisd = Column(Integer)
     charis = Column(Integer)
     maxhp = Column(Integer)
-    Proficiency = Column(Integer)
+    proficiency = Column(Integer)
 
     # Other
     tools = Column(String(1000))
-    Proficiencies = Column(String(1000))
+    proficiencies = Column(String(1000))
     languages = Column(String(140))
     skills = Column(String(1000))
-    Equipment = Column(String(1000))
+    equipment = Column(String(1000))
     gold = Column(Integer)
     silver = Column(Integer)
     cuprum = Column(Integer)

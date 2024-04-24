@@ -1,0 +1,20 @@
+.charsImage {
+    width: 200px;
+    border-radius: 50%;
+}
+
+.charsHeaderBlock {
+    display: flex;
+}
+
+.charsStatBlock {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-between;
+    margin: 10px;
+}
+
+.DetHPValueInput {
+    width: 30px;
+}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CharsGrid from "./gallery/CharsGrid";
 import CharsForm from "./new/CharsForm";
-import CharsDetailed from "./single/CharsDetailed";
+import CharsDetWrap from "./single/CharsDetWrap";
 
 function CharsMain() {
   const [charsView, setCharsView] = useState("grid");
@@ -18,7 +18,7 @@ function CharsMain() {
       ) : null}
       {charsView === "form" ? <CharsForm></CharsForm> : null}
       {charsView.includes("char") ? (
-        <CharsDetailed id={charsView}></CharsDetailed>
+        <CharsDetWrap id={charsView}></CharsDetWrap>
       ) : null}
     </div>
   );

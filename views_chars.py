@@ -108,14 +108,15 @@ def get_chars():
 
 @app.route('/chars/get_character')
 def get_character():
-    data = request.get_data()
-    data = json.loads(data)
 
-    char_id = data['id']
+    char_id = request.args.get('id')
+    char_id = char_id.split('=')[1]
     df = Character.get_details(char_id)
+    df = df.reset_index(drop=True)
+    details = df.loc[0].to_dict()
 
     output = {
-        'details': df
+        'details': details
     }
 
     return output
