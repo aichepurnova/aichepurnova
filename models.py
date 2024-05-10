@@ -309,3 +309,84 @@ class Backgrounds(base):
         df = pd.read_sql(query.statement, dwh_db.connect())
 
         return df
+
+
+class Armors(base):
+    __tablename__ = 'armors'
+
+    index = Column(Integer, primary_key=True)
+    armor_ru = Column(String)
+    armor_en = Column(String)
+    type = Column(String)
+    price = Column(Integer)
+    armor_class = Column(String)
+    min_strength = Column(Integer)
+    stealth = Column(String)
+    weight = Column(Integer)
+
+    @classmethod
+    def get_armors(cls, dict_format=False):
+        query = dwh_session.query(cls).filter()
+
+        df = pd.read_sql(query.statement, dwh_db.connect())
+        df = df.fillna('')
+
+        if dict_format:
+            output_list = []
+            for index, row in df.iterrows():
+                output_list.append({
+                    'index': index,
+                    'armor_ru': df['armor_ru'][index],
+                    'armor_en': df['armor_en'][index],
+                    'type': df['type'][index],
+                    'price': str(df['price'][index]),
+                    'armor_class': df['armor_class'][index],
+                    'min_strength': str(df['min_strength'][index]),
+                    'stealth': df['stealth'][index],
+                    'weight': str(df['weight'][index]),
+                })
+            return output_list
+        else:
+            return df
+
+
+class Weapons(base):
+    __tablename__ = 'weapons'
+
+    index = Column(Integer, primary_key=True)
+    weapon_ru = Column(String)
+    weapon_en = Column(String)
+    type_ru = Column(String)
+    type_en = Column(String)
+    price = Column(String)
+    damage_ru = Column(String)
+    damage_en = Column(String)
+    weight = Column(String)
+    attributes_ru = Column(String)
+    attributes_en = Column(String)
+
+    @classmethod
+    def get_weapons(cls, dict_format=False):
+        query = dwh_session.query(cls).filter()
+
+        df = pd.read_sql(query.statement, dwh_db.connect())
+
+        if dict_format:
+            output_list = []
+            for index, row in df.iterrows():
+                output_list.append({
+                    'index': index,
+                    'weapon_ru': df['weapon_ru'][index],
+                    'weapon_en': df['weapon_en'][index],
+                    'type_ru': df['type_ru'][index],
+                    'type_en': df['type_en'][index],
+                    'price': df['price'][index],
+                    'damage_ru': df['damage_ru'][index],
+                    'damage_en': df['damage_en'][index],
+                    'weight': df['weight'][index],
+                    'attributes_ru': df['attributes_ru'][index],
+                    'attributes_en': df['attributes_en'][index],
+                })
+            return output_list
+        else:
+            return df

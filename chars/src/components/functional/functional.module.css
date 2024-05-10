@@ -71,3 +71,38 @@
     padding: 2px;
     margin-left: 10px;
 }
+
+.diceRolling {
+    width: 50px;
+    height: 50px;
+    background-color: rgb(113, 113, 113);
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    animation: roll 2s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.diceRolled {
+    width: 50px;
+    height: 50px;
+    background-color: rgb(113, 113, 113);
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes roll {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+  

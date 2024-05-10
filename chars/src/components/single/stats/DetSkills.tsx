@@ -1,4 +1,6 @@
+import { useState } from "react";
 import CSS from "./stats.module.css";
+import DiceRolling from "../../functional/DiceRolling";
 
 interface Props {
   skill: string;
@@ -13,10 +15,12 @@ function DetSkills({ skill, proficient, competent }: Props) {
   if (competent) {
     styleCss = CSS["skillComp"];
   }
+  const [dice, setDice] = useState(false);
   return (
-    <div className={CSS["skillWrapper"]}>
+    <div className={CSS["skillWrapper"]} onClick={() => setDice(!dice)}>
       <div className={styleCss}></div>
       <span>{skill}</span>
+      {dice ? <DiceRolling dice={20} modif={0} /> : null}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import json
 from flask import render_template, request
 
 from index import app, get_db_connection
-from models import Character, Classes, Races, Backgrounds
+from models import Character, Classes, Races, Backgrounds, Armors, Weapons
 
 
 @app.route('/chars')
@@ -117,6 +117,76 @@ def get_character():
 
     output = {
         'details': details
+    }
+
+    return output
+
+
+@app.route('/chars/get_data_for_form')
+def get_data_for_form():
+
+    classes = Classes.get_data()
+    races = Races.get_data()
+    backgrounds = Backgrounds.get_data()
+    armors = Armors.get_armors(dict_format=True)
+    weapons = Weapons.get_weapons(dict_format=True)
+
+    classes_list = []
+    classes = classes.fillna(0)
+    for index, row in classes.iterrows():
+        classes_list.append({
+            'index': index,
+            'class_en': classes['class_en'][index],
+            'descriptions': str(classes['descriptions'][index]),
+            'dice': classes['dice'][index],
+            'equipment': classes['equipment'][index],
+            'proficiencies': classes['proficiencies'][index],
+            'saves': classes['saves'][index],
+            'starting_skills': classes['starting_skills'][index],
+            'tools': classes['tools'][index],
+        })
+
+    races_list = []
+    races = races.fillna(0)
+    for index, row in races.iterrows():
+        races_list.append({
+            'index': index,
+            'race': races['race'][index],
+            'subrace': races['subrace'][index],
+            'race_full': races['race_full'][index],
+            'size': races['size'][index],
+            'speed': races['speed'][index],
+            'stat': races['stat'][index],
+            'bonuses': races['bonuses'][index],
+            'languages': races['languages'][index],
+            'skills': races['skills'][index]
+        })
+
+    backgrounds_list = []
+    backgrounds = backgrounds.fillna(0)
+    for index, row in backgrounds.iterrows():
+        backgrounds_list.append({
+            'index': index,
+            'background': backgrounds['background'][index],
+            'languages': backgrounds['languages'][index],
+            'source': backgrounds['source'][index],
+            'page': backgrounds['page'][index],
+            'tools': backgrounds['tools'][index],
+            'proficiencies': backgrounds['proficiencies'][index],
+        })
+
+    output = {
+        'classes': classes_list,
+        'races': races_list,
+        'backgrounds': backgrounds_list,
+        'armors': armors,
+        'weapons': weapons,
+        'proficiencies': {
+            'all': ['Athletics (STR)', 'Acrobatics (DEX)', 'Sleight of Hand (DEX)', 'Stealth (DEX)',
+                    'Arcana (INT)', 'History (INT)', 'Investigation (INT)', 'Nature (INT)', 'Religion (INT)',
+                    'Animal Handling (WIS)', 'Insight (WIS)', 'Medicine (WIS)', 'Perception (WIS)', 'Survival (WIS)',
+                    'Deception (CHA)', 'Intimidation (CHA)', 'Performance (CHA)', 'Persuasion (CHA)']
+        }
     }
 
     return output
