@@ -51,25 +51,41 @@ export interface FormDataProps {
   };
 }
 
+export interface CharsProps {
+  class: ClassProps,
+  race: RaceProps,
+  background: BackgroundProps
+}
+
 function CharsForm() {
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState<FormDataProps>();
+  const [charDetails, setCharDetails] = useState<CharsProps>()
 
   let url = "/chars/get_data_for_form";
   const { data, isLoading } = useData<FormDataProps>(url);
   useEffect(() => {
     setFormData(data);
+
+    if (data) {
+    setCharDetails({
+      class: data.classes[0],
+      race: data.races[0],
+      background: data.backgrounds[0]
+    })
+  }
   }, [data]);
+
+  
 
   return (
     <div>
-      <div>This is a Char creator form</div>
       {isLoading ? <Loader visible={isLoading}></Loader> : null}
 
-      {step === 1 && formData ? <Step1 formData={formData}></Step1> : null}
-      {step === 2 ? <Step2></Step2> : null}
-      {step === 3 ? <Step3></Step3> : null}
+      {step === 1 && formData && charDetails? <Step1 formData={formData} charDetails={charDetails} onChange={setCharDetails}></Step1> : null}
+      {step === 2 && charDetails? <Step2 charDetails={charDetails}></Step2> : null}
+      {step === 3 && formData && charDetails? <Step3 formData={formData} charDetails={charDetails}></Step3> : null}
 
       <div>
         {step !== 1 ? (
