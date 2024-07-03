@@ -111,3 +111,8 @@ def slider():
 @app.route('/game')
 def game():
     return render_template('game.html')
+
+
+@app.route('/textarea')
+def textarea():
+    return render_template('textarea.html')
