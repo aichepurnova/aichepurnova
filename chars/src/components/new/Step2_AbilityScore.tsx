@@ -1,11 +1,15 @@
 import React, { useState } from "react"
 import CSS from "./charsCreateNew.module.css"
+import ArrowsBlock from "../functional/ArrowsBlock"
 
-function Step2_AbilityScore ({ability, value, onChange}: 
-    {ability: string, value: number,  onChange: (value: number) => void}) {
+function Step2AbilityScore ({ability, value, onChange, handleMove}: 
+    {ability: string, 
+        value: number,  
+        onChange: (value: number) => void,
+        handleMove: (direction: string) => void}) {
     
     const [errorMsg, setErrorMsg] = useState<string>()
-        const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let new_value = Number(event.currentTarget.value)
         console.log(new_value)
         if (new_value>20) {
@@ -22,10 +26,9 @@ function Step2_AbilityScore ({ability, value, onChange}:
     return <div className={CSS["Step2_AbilityScore"]}>
         <div>{ability}</div>
         <input type={"number"} value={value} onChange={(event)=>handleInputChange(event)}></input>
-        <button>Up</button>
-        <button>Down</button>
+        <ArrowsBlock onClickUp={()=>handleMove('up')} onClickDown={()=>handleMove('down')}></ArrowsBlock>
         <div>{errorMsg}</div>
     </div>
 }
 
-export default Step2_AbilityScore
+export default Step2AbilityScore

@@ -1,5 +1,5 @@
-import { ReactComponent as ArrowDownSvg } from "./arrow-open-down-svgrepo-com.svg";
-import { ReactComponent as ArrowUpSvg } from "./arrow-open-up-svgrepo-com.svg";
+import { ReactComponent as ArrowDownSvg } from "./images/arrow-open-down-svgrepo-com.svg";
+import { ReactComponent as ArrowUpSvg } from "./images/arrow-open-up-svgrepo-com.svg";
 import CSS from "./functional.module.css";
 
 interface Props {

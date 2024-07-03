@@ -4,6 +4,7 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 import useData from "../../hooks/useData";
 import Loader from "../functional/Loader";
+import Step4 from "./Step4";
 
 export interface ClassProps {
   index: number;
@@ -44,10 +45,10 @@ export interface FormDataProps {
   classes: ClassProps[];
   races: RaceProps[];
   backgrounds: BackgroundProps[];
-  armors: [];
-  weapons: [];
+  armors: string[];
+  weapons: string[];
   proficiencies: {
-    all: [];
+    all: string[];
   };
 }
 
@@ -86,6 +87,7 @@ function CharsForm() {
       {step === 1 && formData && charDetails? <Step1 formData={formData} charDetails={charDetails} onChange={setCharDetails}></Step1> : null}
       {step === 2 && charDetails? <Step2 charDetails={charDetails}></Step2> : null}
       {step === 3 && formData && charDetails? <Step3 formData={formData} charDetails={charDetails}></Step3> : null}
+      {step === 4 && formData && charDetails? <Step4 formData={formData} charDetails={charDetails}></Step4> : null}
 
       <div>
         {step !== 1 ? (

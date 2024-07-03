@@ -3,7 +3,7 @@ import json
 from flask import render_template, request
 
 from index import app, get_db_connection
-from models import Character, Classes, Races, Backgrounds, Armors, Weapons
+from models import Character, Classes, Races, Backgrounds, Armors, Weapons, Subclasses
 
 
 @app.route('/chars')
@@ -130,20 +130,35 @@ def get_data_for_form():
     backgrounds = Backgrounds.get_data()
     armors = Armors.get_armors(dict_format=True)
     weapons = Weapons.get_weapons(dict_format=True)
+    subclasses = Subclasses.get_data()
 
     classes_list = []
     classes = classes.fillna(0)
     for index, row in classes.iterrows():
+        desc = classes['descriptions'][index]
+        desc = json.loads(desc)
         classes_list.append({
             'index': index,
             'class_en': classes['class_en'][index],
-            'descriptions': str(classes['descriptions'][index]),
+            'descriptions': desc,
+            'table': str(classes['table'][index]),
             'dice': classes['dice'][index],
             'equipment': classes['equipment'][index],
             'proficiencies': classes['proficiencies'][index],
             'saves': classes['saves'][index],
             'starting_skills': classes['starting_skills'][index],
             'tools': classes['tools'][index],
+        })
+
+    subclasses_list = []
+    subclasses = subclasses.fillna(0)
+    for index, row in subclasses.iterrows():
+        subclasses_list.append({
+            'index': index,
+            'class_en': subclasses['class_en'][index],
+            'subclass': subclasses['subclass'][index],
+            'descriptions': str(subclasses['descriptions'][index]),
+            'table': str(subclasses['table'][index])
         })
 
     races_list = []
@@ -177,6 +192,7 @@ def get_data_for_form():
 
     output = {
         'classes': classes_list,
+        'subclasses': subclasses_list,
         'races': races_list,
         'backgrounds': backgrounds_list,
         'armors': armors,

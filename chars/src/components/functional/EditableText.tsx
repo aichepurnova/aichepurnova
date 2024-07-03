@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CSS from "./functional.module.css";
-import { ReactComponent as EditSvg } from "./edit-2-svgrepo-com.svg";
-import { ReactComponent as SaveSvg } from "./save-svgrepo-com.svg";
+import { ReactComponent as EditSvg } from "./images/edit-2-svgrepo-com.svg";
+import { ReactComponent as SaveSvg } from "./images/save-svgrepo-com.svg";
 
 interface Props {
   text: string;

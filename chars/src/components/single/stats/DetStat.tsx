@@ -16,7 +16,7 @@ function DetStat({ stat, value }: Props) {
       <div className={CSS["statName"]}>{stat}</div>
       <div className={CSS["statValue"]}>{value}</div>
       <div className={CSS["statModif"]}>Modif: {modificator}</div>
-      {dice ? <DiceRolling dice={20} modif={modificator} /> : null}
+      {dice ? <DiceRolling dice={20} amount={1} modif={modificator} /> : null}
     </div>
   );
 }

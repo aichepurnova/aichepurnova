@@ -20,7 +20,7 @@ function DetSkills({ skill, proficient, competent }: Props) {
     <div className={CSS["skillWrapper"]} onClick={() => setDice(!dice)}>
       <div className={styleCss}></div>
       <span>{skill}</span>
-      {dice ? <DiceRolling dice={20} modif={0} /> : null}
+      {dice ? <DiceRolling dice={20} amount={1} modif={0} /> : null}
     </div>
   );
 }

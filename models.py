@@ -160,6 +160,27 @@ class Classes(base):
         return df
 
 
+class Subclasses(base):
+    __tablename__ = 'subclasses'
+
+    index = Column(Integer, primary_key=True)
+    class_en = Column(String)
+    subclass = Column(String)
+    href = Column(String)
+    table = Column(String)
+    descriptions = Column(String)
+
+    @classmethod
+    def get_data(cls, class_en=None):
+        if class_en:
+            query = dwh_session.query(cls).filter(cls.class_en == class_en)
+        else:
+            query = dwh_session.query(cls)
+        conn = dwh_db.connect()
+        df = pd.read_sql(query.statement, conn)
+        conn.close()
+        return df
+
 
 class Races(base):
     __tablename__ = 'races'
